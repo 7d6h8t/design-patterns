@@ -80,7 +80,7 @@ class JsonBuilder : public Builder {
 // Data 데이터들을 XML 형태의 문자열로 변환해주는 빌더
 class XMLBuilder : public Builder {
  public:
-  XMLBuilder(const Data& Data) : data_(data) {}
+  XMLBuilder(const Data& data) : data_(data) {}
 
   std::string head() override {
     std::string str;
@@ -95,15 +95,15 @@ class XMLBuilder : public Builder {
 
     str.append("\t<NAME>");
     str.append(data_.getName());
-    str.append("<NAME>");
+    str.append("</NAME>");
     str.append("\n\t<AGE>");
     str.append(std::to_string(data_.getAge()));
-    str.append("<AGE>");
+    str.append("</AGE>");
 
     return str;
   }
 
-  std::string foot() override { return "\n</Data>"; }
+  std::string foot() override { return "\n</DATA>"; }
 };
 
 // Director : Builder에서 제공하는 메서드들을 사용해 정해진 순서대로 Product를
@@ -134,17 +134,17 @@ int main() {
   Data data("홍길동", 44);
 
   // 2. 일반 텍스트로 포맷하여 출력
-  Director text_director(std::make_unique<Builder>(new PlainTextBuilder(data)));
+  Director text_director(std::make_unique<PlainTextBuilder>(data));
   std::string text = text_director.build();
   std::cout << text << std::endl;
 
   // 3. JSON 형식으로 포맷하여 출력
-  Director json_director(std::make_unique<Builder>(new JsonBuilder(data)));
+  Director json_director(std::make_unique<JsonBuilder>(data));
   std::string json = json_director.build();
   std::cout << json << std::endl;
 
   // 4. XML 형식으로 포맷하여 출력
-  Director xml_director(std::make_unique<Builder>(new XMLBuilder(data)));
+  Director xml_director(std::make_unique<XMLBuilder>(data));
   std::string xml = xml_director.build();
   std::cout << xml << std::endl;
 
