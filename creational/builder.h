@@ -1,8 +1,10 @@
 /**
  * Builder is a creational design pattern.
- * It makes sense to use the builder pattern only when youer products are quite
- * complex and require extensive configuration.
- * (GOF) 객체의 생성 알고리즘 + 조립 방법을 분리 -> 공정화를 구축
+ * 1. 복잡한 인스턴스 생성 단계를 builder 클래스에 위임.
+ * 2. Director 클래스가 builder 의 단계들을 조합하여 최종 결과물 생성.
+ * 클래스의 인스턴스생성이 매우 복잡하며 많은 설정이 필요한 경우 -> 생성을
+ * 단계적으로 수행(유연성) 하고 각 단계에서 각각의 설정을 단순화(복잡성 해결)
+ * 하기위해 사용됨
  */
 #include <iostream>
 #include <memory>
@@ -37,7 +39,7 @@ class Builder {
 };
 
 // ConcreteBuilder : Builder의 구현체. Product 생성 담당.
-// Data 데이터들을 평범한 물자열로 변환해주는 빌더
+// Data 데이터들을 평범한 문자열로 변환해주는 빌더
 class PlainTextBuilder : public Builder {
  public:
   PlainTextBuilder(const Data& data) : data_(data) {}
@@ -117,7 +119,7 @@ class Director {
   std::string build() {
     std::string str;
 
-    // 빌더 구현체에서 저으이한 생성 알고리즘이 실행됨
+    // 빌더 구현체에서 정의한 생성 알고리즘이 실행됨
     str.append(pBuilder_->head());
     str.append(pBuilder_->body());
     str.append(pBuilder_->foot());
