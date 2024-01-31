@@ -1,8 +1,8 @@
 /**
  * Factory Medthod is a creational design pattern.
- * 객체 생성 역할을 factory 클래스로 몰아넣고 (의존성 제거), 확장성과 factory
- * 클래스의 변동 억제(OCP 원칙) 를 위해 서브클래스로 분리. 생성 루틴 의존성
- * 제거, 확장 필요한 경우 사용됨
+ * 1. 객체 생성 역할을 factory 클래스로 몰아넣음 (의존성 제거).
+ * 2. 확장성과 factory 클래스의 변동 억제(OCP 원칙)를 위해 서브클래스로 분리.
+ * 호출 코드에서 생성 루틴에 대한 의존성 제거 + 확장성이 필요한 경우 사용됨.
  */
 
 #include <iostream>
