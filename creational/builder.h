@@ -129,6 +129,7 @@ class Director {
   std::unique_ptr<Builder> pBuilder_;
 };
 
+/*
 int main() {
   // 1. 포맷할 데이터 생성
   Data data("홍길동", 44);
@@ -150,3 +151,4 @@ int main() {
 
   return 0;
 }
+*/
