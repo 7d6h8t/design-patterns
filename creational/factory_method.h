@@ -51,12 +51,14 @@ class KakaoFactory : public Factory {
   std::unique_ptr<User> create() { return std::make_unique<KakaoUser>(); }
 };
 
-// int main() {
-//   std::unique_ptr<Factory> naverFactory = std::make_unique<NaverFactory>();
-//   std::unique_ptr<User> naverUser = std::move(naverFactory->newInstance());
+/*
+int main() {
+  std::unique_ptr<Factory> naverFactory = std::make_unique<NaverFactory>();
+  std::unique_ptr<User> naverUser = std::move(naverFactory->newInstance());
 
-//   std::unique_ptr<Factory> kakoFactory = std::make_unique<KakaoFactory>();
-//   std::unique_ptr<User> naverUser = std::move(kakoFactory->newInstance());
+  std::unique_ptr<Factory> kakoFactory = std::make_unique<KakaoFactory>();
+  std::unique_ptr<User> naverUser = std::move(kakoFactory->newInstance());
 
-//   return 0;
-// }
+  return 0;
+}
+*/
