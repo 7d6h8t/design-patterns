@@ -1,52 +1,41 @@
 /**
- * singleton is a creational design pattern,
- * which ensures that only one object of its kind exists
- * and provides a single point of access to it for any other code.
+ * singleton is a creational design pattern.
+ * 1. 하나의 객체만 존재하도록 보장.
+ * 2. 다른 코드에 대한 단일 액세스 지점을 제공.
+ * 프로그램 내에서 유일한 인스턴스가 필요한 경우 사용.
  */
-
-#include <mutex>
+#include <iostream>
 #include <string>
 
 class Singleton {
-  /**
-   * The Singleton's constructor/destructor should always be private to
-   * prevent direct construction/desctruction calls with the `new`/`delete`
-   * operator.
-   */
- protected:
+ private:
+  // 외부에서 new'/'delete' 연산자로 인한 '생성'/'제거' 를 방지하기 위해 항상
+  // private 이어야함.
   Singleton(const std::string value) : value_(value) {}
   ~Singleton() {}
 
  public:
-  // Singletons should not be cloneable.
+  // 유일한 인스턴스여야 하기에 '복사'/'할당'을 제거.
   Singleton(Singleton& other) = delete;
-
-  // Singletons should not be assignable.
   void operator=(const Singleton&) = delete;
 
-  /**
-   * This is the static method that controls the access to the singleton
-   * instance. On the first run, it creates a singleton object and places it
-   * into the static field. On subsequent runs, it returns the client existing
-   * object stored in the static field.
-   */
-  static Singleton* GetInstance(const std::string& value) {
-    std::lock_guard<std::mutex> lock(mutex_);
-    if (pinstance_ == nullptr) pinstance_ = new Singleton(value);
-
-    return pinstance_;
+  static Singleton& GetInstance(const std::string& value) {
+    static Singleton instance(value);
+    return instance;
   };
 
-  void SomeBusinessLogic() {
-    // ...
-  }
+  void doSomething() { std::cout << value_ << std::endl; }
 
   std::string value() const { return value_; }
 
- protected:
-  std::string value_;
-
  private:
-  inline static Singleton* pinstance_ = nullptr;
-  static std::mutex mutex_;
+  std::string value_;
 };
+
+/*
+int main() {
+  Singleton::GetInstance("hello").doSomething();
+  Singleton::GetInstance("world").doSomething(); // 처음 만든 hello 출력
+  return 0;
+}
+*/
