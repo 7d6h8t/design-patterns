@@ -8,6 +8,7 @@
  */
 #include <iostream>
 #include <memory>
+#include <string>
 
 // Product : Director 가 Builder로 만들어낸 결과물.
 class Data {
@@ -42,7 +43,7 @@ class Builder {
 // Data 데이터들을 평범한 문자열로 변환해주는 빌더
 class PlainTextBuilder : public Builder {
  public:
-  PlainTextBuilder(const Data& data) : data_(data) {}
+  PlainTextBuilder(const Data& data) : Builder(data) {}
 
   std::string head() override { return ""; }
   std::string body() override {
@@ -62,7 +63,7 @@ class PlainTextBuilder : public Builder {
 // Data 데이터들을 JSON 형태의 문자열로 변환해주는 빌더
 class JsonBuilder : public Builder {
  public:
-  JsonBuilder(const Data& data) : data_(data) {}
+  JsonBuilder(const Data& data) : Builder(data) {}
 
   std::string head() override { return "{\n"; }
   std::string body() override {
@@ -82,7 +83,7 @@ class JsonBuilder : public Builder {
 // Data 데이터들을 XML 형태의 문자열로 변환해주는 빌더
 class XMLBuilder : public Builder {
  public:
-  XMLBuilder(const Data& data) : data_(data) {}
+  XMLBuilder(const Data& data) : Builder(data) {}
 
   std::string head() override {
     std::string str;
