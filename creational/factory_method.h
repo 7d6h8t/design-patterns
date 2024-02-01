@@ -12,9 +12,9 @@
 class User {
  protected:
   User() = default;
-  virtual ~User() = default;
 
  public:
+  virtual ~User() = default;
   virtual void signUp() = 0;
 };
 
@@ -57,7 +57,7 @@ int main() {
   std::unique_ptr<User> naverUser = std::move(naverFactory->newInstance());
 
   std::unique_ptr<Factory> kakoFactory = std::make_unique<KakaoFactory>();
-  std::unique_ptr<User> naverUser = std::move(kakoFactory->newInstance());
+  std::unique_ptr<User> kakaoUser = std::move(kakoFactory->newInstance());
 
   return 0;
 }
