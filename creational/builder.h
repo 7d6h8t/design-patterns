@@ -27,6 +27,7 @@ class Data {
 class Builder {
  public:
   Builder(const Data& data) : data_(data) {}
+  virtual ~Builder() {}
 
   // Data 객체의 데이터들을 원하는 형태의 문자열 포맷을 해주는 메서드들 (머리 -
   // 중간 - 끝 형식)
@@ -44,6 +45,7 @@ class Builder {
 class PlainTextBuilder : public Builder {
  public:
   PlainTextBuilder(const Data& data) : Builder(data) {}
+  ~PlainTextBuilder() {}
 
   std::string head() override { return ""; }
   std::string body() override {
@@ -64,6 +66,7 @@ class PlainTextBuilder : public Builder {
 class JsonBuilder : public Builder {
  public:
   JsonBuilder(const Data& data) : Builder(data) {}
+  ~JsonBuilder() {}
 
   std::string head() override { return "{\n"; }
   std::string body() override {
@@ -84,6 +87,7 @@ class JsonBuilder : public Builder {
 class XMLBuilder : public Builder {
  public:
   XMLBuilder(const Data& data) : Builder(data) {}
+  ~XMLBuilder() {}
 
   std::string head() override {
     std::string str;
