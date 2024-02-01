@@ -14,9 +14,9 @@
 class Manager {
  protected:
   Manager() = default;
-  virtual ~Manager() = default;
 
  public:
+  virtual ~Manager() = default;
   virtual void function() = 0;
 };
 
@@ -35,9 +35,9 @@ class TennisManager : public Manager {
 class Player {
  protected:
   Player() = default;
-  virtual ~Player() = default;
 
  public:
+  virtual ~Player() = default;
   virtual void function() = 0;
 };
 
@@ -83,6 +83,14 @@ class TennisFactory : public AbstractFactory {
 };
 
 /*
+void doSomething(const AbstractFactory& factory) {
+  std::unique_ptr<Manager> manager = factory.createManager();
+  std::unique_ptr<Player> player = factory.createPlayer();
+
+  manager->function();
+  player->function();
+}
+
 int main() {
   std::unique_ptr<AbstractFactory> soccer = std::make_unique<SoccerFactory>();
   std::unique_ptr<AbstractFactory> tennis = std::make_unique<TennisFactory>();
@@ -90,13 +98,5 @@ int main() {
   doSomething(*soccer);
   doSomething(*tennis);
   return 0;
-}
-
-void doSomething(const AbstractFactory& factory) {
-  std::unique_ptr<Manager> manager = factory.createManager();
-  std::unique_ptr<Player> player = factory.createPlayer();
-
-  manager->function();
-  player->function();
 }
 */
