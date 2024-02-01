@@ -14,9 +14,10 @@
 // cloneable 인터페이스
 class Object {
  protected:
-  virtual ~Object() = default;
+  Object() {}
 
  public:
+  virtual ~Object() = default;
   virtual void draw() const = 0;
   virtual std::unique_ptr<Object> clone() = 0;
 };
@@ -52,6 +53,10 @@ class Triangle : public Object {
 };
 
 /*
+void drawObjects(const std::vector<std::unique_ptr<Object>>& objects) {
+  for (const auto& object : objects) object->draw();
+}
+
 int main() {
   Triangle triangle(10, 5);
   Rect rect(25, 10);
@@ -64,9 +69,5 @@ int main() {
   drawObjects(objects);
 
   return 0;
-}
-
-void drawObjects(const std::vector<std::unique_ptr<Object>>& objects) {
-  for (const auto& object : objects) object->draw();
 }
 */
