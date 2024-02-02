@@ -52,6 +52,7 @@ class FahrenheitToCelsiusAdapter2 : public Celsius, public Fahrenheit {
   }
 };
 
+/*
 int main() {
   Fahrenheit fahrenheit(32.0);
 
@@ -68,3 +69,4 @@ int main() {
 
   return 0;
 }
+*/
