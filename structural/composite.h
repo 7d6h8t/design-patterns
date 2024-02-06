@@ -1,10 +1,11 @@
 /**
  * composite is a structural design pattern.
- * 1. 데이터의 공통 기능을 묶는 인터페이스 (Component, [ex] FileSystem).
- * 2. Component 를 구현한 단일 객체 (Leaf, [ex] File) 구현.
- * 3. Component 를 구현한 복합 객체 (Composite, [ex] Folder) 구현. -> Component
- * 의 구현체를 리스트로 관리.
- * 계층적(트리) 형식의 데이터를 다룰때 사용.
+ * 1. 모든 객체들이 구현해야하는 공통 인터페의스를 정의 (Component)
+ * 2. Component 를 구현한 단일 객체 -> 더 이상 하위 객체를 가질 수 없음 (Leaf)
+ * 3. Component 를 구현한 복합 객체 -> 하위 객체를 가질 수 있음 (Composite)
+ * (맴버 변수로 하위 객체들을 list 로 관리)
+ * 계층적(트리) 형식의 데이터를 다룰때 사용. -> 객체를 트리 구조로 구성하여,
+ * 단일 객체와 복합 객체를 동일한 인터페이스를 사용하여 다룰 수 있음.
  */
 #include <deque>
 #include <iostream>
