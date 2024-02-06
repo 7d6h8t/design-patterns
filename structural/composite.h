@@ -1,5 +1,9 @@
 /**
  * composite is a structural design pattern.
+ * 1. 데이터의 공통 기능을 묶는 인터페이스 (Component, [ex] FileSystem).
+ * 2. Component 를 구현한 단일 객체 (Leaf, [ex] File) 구현.
+ * 3. Component 를 구현한 복합 객체 (Composite, [ex] Folder) 구현. -> Component
+ * 의 구현체를 리스트로 관리.
  * 계층적(트리) 형식의 데이터를 다룰때 사용.
  */
 #include <deque>
@@ -15,10 +19,10 @@ class FileSystem {
  public:
   virtual ~FileSystem() = default;
 
-  virtual void print(const std::string& str) const = 0;
+  virtual void Print(const std::string& str) const = 0;
   virtual int32_t GetSize() const = 0;
 
-  virtual void Add(std::unique_ptr<FileSystem>&& component) {}
+  virtual void Add(std::shared_ptr<FileSystem> node) {}
 };
 
 // Composite
@@ -26,16 +30,14 @@ class Folder final : public FileSystem {
  public:
   Folder(const std::string& name) : name_(name) {}
 
-  void Add(std::unique_ptr<FileSystem>&& node) {
-    list_.push_back(std::move(node));
-  }
+  void Add(std::shared_ptr<FileSystem> node) { list_.push_back(node); }
 
-  void print(const std::string& str) const override {
+  void Print(const std::string& str) const override {
     int32_t size = GetSize();
 
     std::cout << str << "ㄴ" << name_ << " (" << size << "kb)" << std::endl;
 
-    for (const auto& node : list_) node->print(str + "    ");
+    for (const auto& node : list_) node->Print(str + "    ");
   }
 
   int32_t GetSize() const override {
@@ -46,7 +48,7 @@ class Folder final : public FileSystem {
   }
 
  private:
-  std::deque<std::unique_ptr<FileSystem>> list_;
+  std::deque<std::shared_ptr<FileSystem>> list_;
   std::string name_;
 };
 
@@ -56,7 +58,7 @@ class File : public FileSystem {
   File(const std::string& name, const int32_t size)
       : name_(name), size_(size) {}
 
-  void print(const std::string& str) const override {
+  void Print(const std::string& str) const override {
     std::cout << str << "ㄴ" << name_ << " (" << size_ << "kb)" << std::endl;
   }
 
@@ -69,20 +71,20 @@ class File : public FileSystem {
 
 int main() {
   Folder root("root");
+  std::shared_ptr<Folder> sub1 = std::make_shared<Folder>("sub1");
+  std::shared_ptr<Folder> sub2 = std::make_shared<Folder>("sub2");
 
-  root.Add(std::make_unique<File>("file1", 10));
+  root.Add(sub1);
+  root.Add(sub2);
 
-  std::unique_ptr<Folder> sub1 = std::make_unique<Folder>("sub1");
-  sub1->Add(std::make_unique<File>("file11", 10));
-  sub1->Add(std::make_unique<File>("file12", 10));
+  root.Add(std::make_shared<File>("file1", 10));
 
-  std::unique_ptr<Folder> sub2 = std::make_unique<Folder>("sub2");
-  sub2->Add(std::make_unique<File>("file21", 10));
+  sub1->Add(std::make_shared<File>("file11", 10));
+  sub1->Add(std::make_shared<File>("file12", 10));
 
-  root.Add(std::move(sub1));
-  root.Add(std::move(sub2));
+  sub2->Add(std::make_shared<File>("file21", 10));
 
-  root.print("");
+  root.Print("");
 
   return 0;
 }
