@@ -2,80 +2,89 @@
  * decorator is a structural design pattern.
  */
 #include <iostream>
+#include <memory>
 
+// Component
 class Weapon {
  public:
-  virtual void AimAndFire() = 0;
+  virtual ~Weapon() = default;
+  virtual void Fire() const = 0;
+
+ protected:
+  Weapon() = default;
 };
 
+// Concrete Component
 class BaseWeapon : public Weapon {
  public:
-  void AimAndFire() { std::cout << "fire" << std::endl; }
+  void Fire() const override { std::cout << "fire" << std::endl; }
 };
 
 // Decorator
 class Accessory : public Weapon {
  public:
-  Accessory(Weapon* rifle) : rifle_(rifle) {}
+  Accessory(std::unique_ptr<Weapon>&& rifle) : rifle_(std::move(rifle)) {}
 
-  void AimAndFire() override { rifle_->AimAndFire(); }
+  void Fire() const override { rifle_->Fire(); }
 
  private:
-  Weapon* rifle_;
+  std::unique_ptr<Weapon> rifle_;
 };
 
 // Concrete Decorator
 class Generade : public Accessory {
  public:
-  Generade(Weapon* rifle) : Accessory(rifle) {}
+  Generade(std::unique_ptr<Weapon>&& rifle) : Accessory(std::move(rifle)) {}
 
-  void AimAndFire() override {
-    Accessory::AimAndFire();
+  void Fire() const override {
+    Accessory::Fire();
     GeneradeFire();
   }
 
-  void GeneradeFire() { std::cout << "generade fire" << std::endl; }
+  void GeneradeFire() const { std::cout << "generade fire" << std::endl; }
 };
 
 // Concrete Decorator
 class Scoped : public Accessory {
  public:
-  Scoped(Weapon* rifle) : Accessory(rifle) {}
+  Scoped(std::unique_ptr<Weapon>&& rifle) : Accessory(std::move(rifle)) {}
 
-  void AimAndFire() override {
+  void Fire() const override {
     Aiming();
-    Accessory::AimAndFire();
+    Accessory::Fire();
   }
 
-  void Aiming() { std::cout << "Aiming..." << std::endl; }
+  void Aiming() const { std::cout << "Aiming..." << std::endl; }
 };
 
 // Concrete Decorator
 class Buttstock : public Accessory {
  public:
-  Buttstock(Weapon* rifle) : Accessory(rifle) {}
+  Buttstock(std::unique_ptr<Weapon>&& rifle) : Accessory(std::move(rifle)) {}
 
-  void AimAndFire() override {
+  void Fire() const override {
     Holding();
-    Accessory::AimAndFire();
+    Accessory::Fire();
   }
 
-  void Holding() { std::cout << "holding compelete" << std::endl; }
+  void Holding() const { std::cout << "holding compelete" << std::endl; }
 };
 
 int main() {
   // 1. 유탄발사기가 달린 총
-  Weapon* generade_rifle = new Generade(new BaseWeapon());
-  generade_rifle->AimAndFire();
+  std::unique_ptr<Weapon> generade_rifle =
+      std::make_unique<Generade>(std::make_unique<BaseWeapon>());
+  generade_rifle->Fire();
 
   // 2. 개머리판을 장착하고 스코프를 달은 총
-  Weapon* buttstock_scoped_rifle =
-      new Buttstock(new Generade(new BaseWeapon()));
-  buttstock_scoped_rifle->AimAndFire();
+  std::unique_ptr<Weapon> buttstock_scoped_rifle = std::make_unique<Buttstock>(
+      std::make_unique<Generade>(std::make_unique<BaseWeapon>()));
+  buttstock_scoped_rifle->Fire();
 
   // 3. 유탄발사기 + 개머리판 + 스코프가 달린 총
-  Weapon* buttstock_scoped_generade_rifle =
-      new Buttstock(new Scoped(new Generade(new BaseWeapon())));
-  buttstock_scoped_generade_rifle->AimAndFire();
+  std::unique_ptr<Weapon> buttstock_scoped_generade_rifle =
+      std::make_unique<Buttstock>(std::make_unique<Scoped>(
+          std::make_unique<Generade>(std::make_unique<BaseWeapon>())));
+  buttstock_scoped_generade_rifle->Fire();
   return 0;
 }
