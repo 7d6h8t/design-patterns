@@ -29,8 +29,8 @@ class Generade : public Accessory {
  public:
   Generade(Weapon* rifle) : Accessory(rifle) {}
 
-  void AimAndFire() {
-    AimAndFire();
+  void AimAndFire() override {
+    Accessory::AimAndFire();
     GeneradeFire();
   }
 
@@ -42,9 +42,9 @@ class Scoped : public Accessory {
  public:
   Scoped(Weapon* rifle) : Accessory(rifle) {}
 
-  void AimAndFire() {
+  void AimAndFire() override {
     Aiming();
-    AimAndFire();
+    Accessory::AimAndFire();
   }
 
   void Aiming() { std::cout << "Aiming..." << std::endl; }
@@ -55,9 +55,9 @@ class Buttstock : public Accessory {
  public:
   Buttstock(Weapon* rifle) : Accessory(rifle) {}
 
-  void AimAndFire() {
+  void AimAndFire() override {
     Holding();
-    AimAndFire();
+    Accessory::AimAndFire();
   }
 
   void Holding() { std::cout << "holding compelete" << std::endl; }
