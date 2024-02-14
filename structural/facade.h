@@ -1,87 +1,58 @@
 /**
  * facade is a structural design pattern.
- * 시스템이 복잡하여 간단한 인터페이스를 통해 접근하고 싶을때 사용.
+ * 1. 다양한 기능의 기존 클래스 (Subsystem)
+ * 2. 기존 Subsystem 을 감싸 클라이언트에게 제공 (Facade)
+ * Facade + Subsytem 으로 구성하여 사용자에게 Facade 를 통해 접근하도록 구현.
+ * 복잡한 시스템을 간단한 인터페이스로 감싸서 간단하게 사용하고 싶을때 사용.
  */
-#include <chrono>
-#include <exception>
-#include <map>
+#include <iostream>
+#include <memory>
 #include <string>
-#include <thread>
 
-class Row {
+class Subsystem1 {
  public:
-  Row(const std::string& name, const std::string& birthday,
-      const std::string& email)
-      : name_(name), birthday_(birthday), email_(email) {}
-
-  std::string GetName() const { return name_; }
-  std::string GetBirthday() const { return birthday_; }
-  std::string GetEmail() const { return email_; }
-
- private:
-  std::string name_;
-  std::string birthday_;
-  std::string email_;
+  std::string Operation1() const { return "Subsystem1: Ready!\n"; }
+  // ...
+  std::string OperationN() const { return "Subsystem1: GO!\n"; }
 };
 
-class DBMS {
+class Subsystem2 {
  public:
-  void Put(const std::string& name, const Row& row) { db_[name] = row; }
-  Row Query(const std::string& name) {
-    try {
-      std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    } catch (...) {
-    }
-
-    return db_[name];
-  }
-
- private:
-  std::map<std::string, Row> db_;
-};
-
-class Cache {
- public:
-  void Put(const Row& row) { cache_[row.GetName()] = row; }
-  Row Get(const std::string& name) { return cache_[name]; }
-
- private:
-  std::map<std::string, Row> cache_;
-};
-
-class Message {
- public:
-  Message(const Row& row) : row_(row) {}
-
-  std::string MakeName() { return "Name : \"" + row_.GetName() + "\""; }
-  std::string MakeBirthday() { return "Birthday : " + row_.GetBirthday(); }
-  std::string MakeEmail() { return "Email : " + row_.GetEmail(); }
-
- private:
-  Row row_;
+  std::string Operation1() const { return "Subsystem2: Get ready!\n"; }
+  // ...
+  std::string OperationZ() const { return "Subsystem2: Fire!\n"; }
 };
 
 class Facade {
  public:
-  void Insert() {
-    dbms_.Put("aaa", Row{"aaa", "1890-02-14", "aaa@naver.com"});
-    dbms_.Put("bbb", Row{"bbb", "1820-11-02", "bbb@naver.com"});
-    dbms_.Put("ccc", Row{"ccc", "710-08-27", "ccc@naver.com"});
+  Facade(std::unique_ptr<Subsystem1>&& subsystem1 = nullptr,
+         std::unique_ptr<Subsystem2>&& subsystem2 = nullptr) {
+    subsystem1_ =
+        subsystem1 ? std::move(subsystem1) : std::make_unique<Subsystem1>();
+    subsystem2_ =
+        subsystem2 ? std::move(subsystem2) : std::make_unique<Subsystem2>();
   }
 
-  void Run(const std::string& name) {
-    Row row = cache_.Get(name);
-    if (row == null) }
+  virtual ~Facade() = default;
 
- private:
-  DBMS dbms_;
-  Cache cache_;
+  std::string Operation() {
+    std::string result = "Facade initializes subsystems:\n";
+    result += subsystem1_->Operation1();
+    result += subsystem2_->Operation1();
+    result += "Facade orders subsystems to perform the action:\n";
+    result += subsystem1_->OperationN();
+    result += subsystem2_->OperationZ();
+    return result;
+  }
+
+ protected:
+  std::unique_ptr<Subsystem1> subsystem1_;
+  std::unique_ptr<Subsystem2> subsystem2_;
 };
 
 int main() {
-  Facade facade;
-  facade.Insert();
-  facade.Run("aaa");
+  Facade facade(std::make_unique<Subsystem1>(), std::make_unique<Subsystem2>());
+  std::cout << facade.Operation();
 
   return 0;
 }
