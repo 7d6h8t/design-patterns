@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 
+// Subsystem
 class Subsystem1 {
  public:
   std::string Operation1() const { return "Subsystem1: Ready!\n"; }
@@ -16,6 +17,7 @@ class Subsystem1 {
   std::string OperationN() const { return "Subsystem1: GO!\n"; }
 };
 
+// Subsystem
 class Subsystem2 {
  public:
   std::string Operation1() const { return "Subsystem2: Get ready!\n"; }
@@ -23,6 +25,7 @@ class Subsystem2 {
   std::string OperationZ() const { return "Subsystem2: Fire!\n"; }
 };
 
+// Facade
 class Facade {
  public:
   Facade(std::unique_ptr<Subsystem1>&& subsystem1 = nullptr,
@@ -50,9 +53,11 @@ class Facade {
   std::unique_ptr<Subsystem2> subsystem2_;
 };
 
+/*
 int main() {
   Facade facade(std::make_unique<Subsystem1>(), std::make_unique<Subsystem2>());
   std::cout << facade.Operation();
 
   return 0;
 }
+*/
