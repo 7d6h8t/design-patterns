@@ -12,6 +12,10 @@ class TreeSharedState {
                   const std::string& texture)
       : type_(type), mesh_(mesh), texture_(texture) {}
 
+  std::string GetType() const { return type_; }
+  std::string GetMesh() const { return mesh_; }
+  std::string GetTexture() const { return texture_; }
+
  private:
   std::string type_;
   std::string mesh_;
@@ -20,41 +24,43 @@ class TreeSharedState {
 
 class Tree {
  public:
-  Tree(TreeSharedState* shared_state, const double x, const double y)
+  Tree(const TreeSharedState& shared_state, const double x, const double y)
       : shared_state_(shared_state), x_(x), y_(y) {}
 
   double GetX() { return x_; }
   double GetY() { return y_; }
 
  private:
-  TreeSharedState* shared_state_;
+  TreeSharedState shared_state_;
   double x_;
   double y_;
 };
 
-class TreeSharedStateFactory final {
+class Factory final {
  public:
+  static Factory& GetInstance() {
+    static Factory instance;
+    return instance;
+  }
+
   TreeSharedState GetSharedState(const std::string& key) {
     if (cache_.find(key) != cache_.end())
       return *cache_.at(key);
     else {
-      TreeSharedState* model = new TreeSharedState(key, "mesh", "texture");
-
-      cache_[key] = model;
-      return *model;
+      cache_[key] = new TreeSharedState(key, "mesh", "texture");
+      return *cache_[key];
     }
   }
 
  private:
-  std::unordered_map<std::string, TreeSharedState*> cache_;
+  static std::unordered_map<std::string, TreeSharedState*> cache_;
 };
 
-/*
-TreeSharedStateFactory tree_shared_state_factory;
+std::unordered_map<std::string, TreeSharedState*> Factory::cache_;
 
 void CreateTree(const std::string& type, const double x, const double y) {
-  TreeSharedState tree_state = tree_shared_state_factory.GetSharedState(type);
-  Tree tree(&tree_state, x, y);
+  TreeSharedState tree_state = Factory::GetInstance().GetSharedState(type);
+  Tree tree(tree_state, x, y);
 
   std::cout << "x:" << tree.GetX() << " y:" << tree.GetY() << " 위치에 " << type
             << " 나무 생성 완료" << std::endl;
@@ -71,4 +77,3 @@ int main() {
 
   return 0;
 }
-*/
