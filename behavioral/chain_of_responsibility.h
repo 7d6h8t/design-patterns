@@ -5,12 +5,12 @@
  * 기능을 여러 객체로 나눔 + 체인으로 연결 -> 각 객체가 자신의 기능만 담당
  */
 #include <iostream>
-#include <memory>
 #include <string>
 
 // Handler
 class Handler {
  public:
+  virtual ~Handler() {}
   virtual Handler* SetNext(Handler* handler) {
     next_handler_ = handler;
     return handler;
