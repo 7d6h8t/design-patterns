@@ -1,9 +1,14 @@
 /**
  * Iterator is a behavioral design pattern.
- * 데이터 집합에 대해 순차적인 접근이 필요할때 사용.
+ * 1. 데이터 요소에 접근 및 순회 역할의 인터페이스 정의 Iterator
+ * 2. Iterator 를 구현하여 실제 순회 방법 구현 ConcreteIterator
+ * 3. 데이터 집합 인터페이스 정의 Aggregate (Iterator 반환 함수 필요)
+ * 4. Aggregate 를 구현하여 실제 데이터 집합 정의 ConcreteAggregate
+ * 데이터 집합에 대해 일관된 방식의 순차적 접근이 필요할때 사용.
  */
 #include <iostream>
 
+// Iterator
 template <typename T>
 class Iterator {
  public:
@@ -11,10 +16,11 @@ class Iterator {
   virtual T Next() = 0;
 };
 
+// ConcreteIterator
 template <typename T>
-class ConcreteIterator : public Iterator<T> {
+class ArrayIterator : public Iterator<T> {
  public:
-  ConcreteIterator(T* arr) : arr_(arr) {}
+  ArrayIterator(T* arr) : arr_(arr) {}
   bool HasNext() override { return next_index_ < 5 /*arr_.size*/; }
   T Next() override { return arr_[next_index_++]; }
 
@@ -33,7 +39,7 @@ class ConcreateAggregate : public Aggregate<T> {
  public:
   ConcreateAggregate(const int32_t size) { arr_ = new T[size]; }
   void Add(T elem) { arr_[index_++] = elem; }
-  Iterator<T>* Iterator() override { return new ConcreteIterator<T>(arr_); }
+  Iterator<T>* Iterator() override { return new ArrayIterator<T>(arr_); }
 
  private:
   T* arr_;
