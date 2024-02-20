@@ -29,15 +29,17 @@ class ArrayIterator : public Iterator<T> {
   int32_t next_index_ = 0;
 };
 
+// Aggregate
 template <typename T>
 class Aggregate {
   virtual Iterator<T>* Iterator() = 0;
 };
 
+// ConcreteAggregate
 template <typename T>
-class ConcreateAggregate : public Aggregate<T> {
+class Array : public Aggregate<T> {
  public:
-  ConcreateAggregate(const int32_t size) { arr_ = new T[size]; }
+  Array(const int32_t size) { arr_ = new T[size]; }
   void Add(T elem) { arr_[index_++] = elem; }
   Iterator<T>* Iterator() override { return new ArrayIterator<T>(arr_); }
 
@@ -47,7 +49,7 @@ class ConcreateAggregate : public Aggregate<T> {
 };
 
 int main() {
-  ConcreateAggregate<int32_t> aggregate(5);
+  Array<int32_t> aggregate(5);
   aggregate.Add(1);
   aggregate.Add(2);
   aggregate.Add(3);
