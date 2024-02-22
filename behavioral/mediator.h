@@ -1,6 +1,9 @@
 /**
  * Mediator is a behavioral design pattern.
- * 클래스간 복잡한 로직(상호작용)을 캡슐화 -> 하나의 클래스에 위임.
+ * 1. 상호 작용을 중재할 인터페이스 정의 Mediator
+ * 2. Mediator 에 등록되어 상호작용 할 클래스 정의 Colleague
+ * 3. Colleague 를 관리하고 중재하는 클래스 구현 ConcreteMediator
+ * 클래스간 상호작용을 캡슐화 -> 하나의 클래스에 위임.
  */
 #include <algorithm>
 #include <deque>
