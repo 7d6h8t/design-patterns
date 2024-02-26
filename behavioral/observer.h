@@ -1,66 +1,82 @@
 /**
  * Observer is a behavioral design pattern.
- * 한 객체의 상태 변경 -> 의존하는 다른 객체 모두에 notify & update
+ * 한 객체 (Subject) 의 상태 변경 -> 의존하는 다른 객체(OBserver) 모두에 notify
+ * & update
  */
 #include <algorithm>
 #include <deque>
 #include <iostream>
-#include <random>
+#include <string>
 
 class Observer;
-class WeatherAPI;
 
 // Subject
 class Subject {
  public:
-  virtual ~Subject() {}
+  virtual ~Subject(){};
 
-  virtual void RegisterObserver(Observer* o) = 0;
-  virtual void RemoveObserver(Observer* o) = 0;
+  virtual void Attach(Observer* observer) = 0;
+  virtual void Detach(Observer* observer) = 0;
   virtual void Notify() = 0;
 };
 
 // Observer
 class Observer {
  public:
-  virtual void Display(WeatherAPI* api) = 0;
+  virtual ~Observer(){};
+  virtual void Update(const std::string& title) = 0;
 };
 
 // ConcreteSubject
-class WeatherAPI : public Subject {
+class NespaperCompny : public Subject {
  public:
-  void measurementsChanged() {
-    temp_ = rand();
-    humidity_ = rand();
-    pressure_ = rand();
+  void Attach(Observer* observer) override { observers_.push_back(observer); }
 
-    Notify();
-  }
-
-  void RegisterObserver(Observer* o) override { subscribers_.push_back(o); }
-  void RemoveObserver(Observer* o) override {
-    auto itr = std::find(subscribers_.begin(), subscribers_.end(), o);
-    if (itr != subscribers_.end()) subscribers_.erase(itr);
-
-    subscribers_.push_back(o);
+  void Detach(Observer* observer) override {
+    auto itr = std::find(observers_.begin(), observers_.end(), observer);
+    if (itr != observers_.end()) observers_.erase(itr);
   }
 
   void Notify() override {
-    for (Observer* o : subscribers_) o->Display(this);
+    for (auto& observer : observers_) observer->Update(title_);
+  }
+
+  void pulish(const std::string title) {
+    title_ = title;
+    Notify();
   }
 
  private:
-  float temp_;
-  float humidity_;
-  float pressure_;
-  std::deque<Observer*> subscribers_;
+  std::deque<Observer*> observers_;
+  std::string title_;
 };
 
-class KoreanUser : public Observer {
+// ConcreteObserver
+class Subscriber : public Observer {
  public:
-  KoreanUser(const std::string& name) : name_(name) {}
-  void Display(WeatherAPI* api) { std::cout << std::endl; }
+  Subscriber(const std::string& name) : name_(name) {}
+  void Update(const std::string& title) override {
+    std::cout << name_ << ": I got newspaper!" << std::endl;
+    std::cout << "   - Title: " << title << std::endl;
+  }
 
  private:
   std::string name_;
+};
+
+int main() {
+  NespaperCompny newspaper_company;
+
+  Subscriber steve("steve");
+  Subscriber peter("peter");
+  Subscriber jane("jane");
+
+  newspaper_company.Attach(&steve);
+  newspaper_company.Attach(&peter);
+  newspaper_company.Attach(&jane);
+
+  newspaper_company.pulish("Oil price arise!");
+  newspaper_company.pulish("Lily will get maary!");
+
+  return 0;
 }
