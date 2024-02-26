@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <deque>
 #include <iostream>
+#include <memory>
 #include <string>
 
 class Observer;
@@ -18,8 +19,8 @@ class Subject {
  public:
   virtual ~Subject(){};
 
-  virtual void Attach(Observer* observer) = 0;
-  virtual void Detach(Observer* observer) = 0;
+  virtual void Attach(std::shared_ptr<Observer> observer) = 0;
+  virtual void Detach(std::shared_ptr<Observer> observer) = 0;
   virtual void Notify() = 0;
 };
 
@@ -33,9 +34,11 @@ class Observer {
 // ConcreteSubject
 class NespaperCompny : public Subject {
  public:
-  void Attach(Observer* observer) override { observers_.push_back(observer); }
+  void Attach(std::shared_ptr<Observer> observer) override {
+    observers_.push_back(observer);
+  }
 
-  void Detach(Observer* observer) override {
+  void Detach(std::shared_ptr<Observer> observer) override {
     auto itr = std::find(observers_.begin(), observers_.end(), observer);
     if (itr != observers_.end()) observers_.erase(itr);
   }
@@ -44,13 +47,13 @@ class NespaperCompny : public Subject {
     for (auto& observer : observers_) observer->Update(title_);
   }
 
-  void pulish(const std::string title) {
+  void publish(const std::string title) {
     title_ = title;
     Notify();  // 상태 변경 시 옵저버들에게 알림
   }
 
  private:
-  std::deque<Observer*> observers_;
+  std::deque<std::shared_ptr<Observer>> observers_;
   std::string title_;
 };
 
@@ -69,15 +72,12 @@ class Subscriber : public Observer {
 int main() {
   NespaperCompny newspaper_company;
 
-  Subscriber steve("steve");
-  Subscriber peter("peter");
-  Subscriber jane("jane");
+  newspaper_company.Attach(std::make_shared<Subscriber>("Steve"));
+  newspaper_company.Attach(std::make_shared<Subscriber>("Peter"));
+  newspaper_company.Attach(std::make_shared<Subscriber>("Jane"));
 
-  newspaper_company.Attach(&steve);
-  newspaper_company.Attach(&peter);
-  newspaper_company.Attach(&jane);
-
-  newspaper_company.pulish("Breaking News: Important Event!");
+  // 상태 변경 시 등록된 구독자들(옵저버들) 에게 알림
+  newspaper_company.publish("Breaking News: Important Event!");
 
   return 0;
 }
