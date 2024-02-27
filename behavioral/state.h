@@ -1,5 +1,8 @@
 /**
  * State Method is a behavioral design pattern.
+ * 1. 상태 인터페이스 정의 State
+ * 2. 각 상태를 구체화하여 구현 ConcreteState
+ * 3. 알고리즘 인터페이스를 맴버변수로 사용하여 실행하는 주체 구현 Context
  * 내부 상태가 변할때 -> 행동 변할 수 있도록 하는 패턴.
  */
 #include <iostream>
