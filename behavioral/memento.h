@@ -1,5 +1,8 @@
 /**
  * Memento is a behavioral design pattern.
+ * 1. Originator의 특정 상태를 저장하기 위한 클래스 정의 Memento
+ * 2. Memento 를 생성하고, 현재 상태를 저장하는 클래스 정의 Originator
+ * 3. Memento 의 상태를 관리하고, Originator 의 상태를 복원하는 클래스 Caretaker
  * 객체의 상태를 저장 + 나중에 이 상태를 복원(롤백) 할때 사용함.
  * 상태 스냅샷이 필요한 경우.
  */
@@ -8,83 +11,59 @@
 #include <iostream>
 #include <string>
 
-// Memento: 상태를 저장하는 클래스
-class EditorMemento {
+// Memento: Originator 의 특정 상태를 저장하는 클래스
+class Memento {
  public:
-  explicit EditorMemento(const std::string& content) : content_(content) {}
-
-  const std::string& GetContent() const { return content_; }
+  explicit Memento(const std::string& state) : state_(state) {}
+  std::string GetState() const { return state_; }
 
  private:
-  std::string content_;
+  std::string state_;
 };
 
 // Originator: 상태를 저장하고 복원하는 클래스
 class TextEditor {
  public:
-  void SetContent(const std::string& content) { content_ = content; }
+  void Typing(const std::string& text) { text_ += text; }
+  void Print() { std::cout << text_ << std::endl; }
 
-  const std::string& GetContent() const { return content_; }
+  // Create Memento
+  Memento Save() const { return Memento(text_); }
 
-  EditorMemento CreateMemento() const { return EditorMemento(content_); }
-
-  void RestoreMemento(const EditorMemento& memento) {
-    content_ = memento.GetContent();
-  }
+  // Set Memento
+  void Restore(const Memento& memento) { text_ = memento.GetState(); }
 
  private:
-  std::string content_;
+  std::string text_;
 };
 
-// Caretaker: 상태를 저장하고 복원하는 클래스를 관리하는 클래스
-class UndoRedoManager {
+// Caretaker: Originator를 관리하는 클래스
+class UndoManager {
  public:
-  void SaveState(const EditorMemento& memento) {
-    undo_stack_.push_back(memento);
-    current_idx = undo_stack_.size() - 1;
-  }
-
-  void Undo(TextEditor& editor) {
-    if (CanUndo()) {
-      --current_idx;
-      editor.RestoreMemento(undo_stack_[current_idx]);
-    }
-  }
-
-  void Redo(TextEditor& editor) {
-    if (CanRedo()) {
-      ++current_idx;
-      editor.RestoreMemento(undo_stack_[current_idx]);
-    }
-  }
+  void SaveState(const Memento& memento) { undo_stack_.push_back(memento); }
+  Memento GetState(const uint32_t i) { return undo_stack_[i]; }
 
  private:
-  bool CanUndo() const { return current_idx > 0; }
-  bool CanRedo() const { return current_idx < undo_stack_.size() - 1; }
-
-  std::deque<EditorMemento> undo_stack_;
-  size_t current_idx = 0;
+  std::deque<Memento> undo_stack_;
 };
 
+/*
 int main() {
   TextEditor editor;
-  UndoRedoManager undo_redo_manager;
+  UndoManager undo_manager;
 
-  // 초기 상태 저장
-  undo_redo_manager.SaveState(editor.CreateMemento());
+  editor.Typing("Hello, ");
+  undo_manager.SaveState(editor.Save());
 
-  // 사용자의 동작
-  editor.SetContent("Hello, ");
-  std::cout << "Current Content: " << editor.GetContent() << std::endl;
+  editor.Typing("world!");
+  undo_manager.SaveState(editor.Save());
 
-  // 상태 저장 및 undo 가능
-  undo_redo_manager.SaveState(editor.CreateMemento());
-  undo_redo_manager.Undo(editor);
-  std::cout << "After Undo: " << editor.GetContent() << std::endl;
+  editor.Typing(" Goodbye!");
+  editor.Print();
 
-  // redo 가능
-  undo_redo_manager.Redo(editor);
-  std::cout << "After Redo: " << editor.GetContent() << std::endl;
+  editor.Restore(undo_manager.GetState(1));
+  editor.Print();
 
   return 0;
 }
+*/
