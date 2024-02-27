@@ -1,6 +1,9 @@
 /**
  * Strategy is a behavioral design pattern.
- * 런타임에 알고리즘을 동적으로 교체해야할 때 사용.
+ * 1. 알고리즘을 묶는 인터페이스 정의 Strategy
+ * 2. 각 알고리즘을 구체화하여 구현 ConcreteStrategy
+ * 3. 알고리즘 인터페이스를 맴버변수로 사용하여 실행하는 주체 구현 Context
+ * 각 알고리즘을 캡슐화 -> 동적으로 교체 가능하게 만듬.
  * (알고리즘 변형이 빈번하게 필요한 경우)
  */
 #include <iostream>
@@ -47,6 +50,7 @@ class Renderer {
   std::unique_ptr<Converter> converter_;
 };
 
+/*
 int main() {
   Renderer renderer(std::make_unique<Yuv420ToRgb24>());
   renderer.Draw();
@@ -54,3 +58,4 @@ int main() {
   renderer.SetConverter(std::make_unique<Yuv422ToRgb24>());
   renderer.Draw();
 }
+*/
