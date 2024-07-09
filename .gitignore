@@ -37,3 +37,6 @@ build/
 
 # VS code
 .vscode
+
+# uml
+.~ml
