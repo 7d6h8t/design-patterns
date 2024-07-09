@@ -39,4 +39,4 @@ build/
 .vscode
 
 # uml
-.~ml
+*.~ml
