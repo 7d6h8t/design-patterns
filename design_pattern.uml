@@ -1586,7 +1586,7 @@ void ConcreteSubject::Notify() {
 <XPD:ATTR name="#OwnedViews" type="integer">13</XPD:ATTR>
 <XPD:OBJ name="OwnedViews[0]" type="UMLClassView" guid="mPF4FZQpz0WtQOfO4eIsgwAA">
 <XPD:ATTR name="Left" type="integer">196</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">76</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">72</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">113</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">59</XPD:ATTR>
 <XPD:REF name="Model">XPzTt3tNnEiD054mnlLPvgAA</XPD:REF>
@@ -1618,7 +1618,7 @@ void ConcreteSubject::Notify() {
 <XPD:ATTR name="Left" type="integer">368</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">52</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">145</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">89</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">98</XPD:ATTR>
 <XPD:REF name="Model">uDHK+gYDWUKwBlTkDMZ2oAAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="rR6lUJomV0+ewmwLDfXT4wAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="LNMoIwwIT02hve3UsO/NMQAA">
@@ -1706,7 +1706,7 @@ void ConcreteSubject::Notify() {
 </XPD:OBJ>
 <XPD:OBJ name="OwnedViews[4]" type="UMLClassView" guid="FPMpNj2TxEyB+59zAEMDLgAA">
 <XPD:ATTR name="FillColor" type="string">$00E0DDE1</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">196</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">200</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">188</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">105</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">38</XPD:ATTR>
@@ -1737,7 +1737,7 @@ void ConcreteSubject::Notify() {
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedViews[5]" type="UMLRealizationView" guid="Nws8oU4znEWHB/GIbtWrjwAA">
-<XPD:ATTR name="Points" type="Points">440,202;440,140</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">440,202;440,149</XPD:ATTR>
 <XPD:REF name="Model">33jLwV+Ih0On72Uq+F5PZAAA</XPD:REF>
 <XPD:REF name="Head">O01+0HWQIESwbbrlGATrLQAA</XPD:REF>
 <XPD:REF name="Tail">4BaKCPpEkkuXnU7Ww+nCYwAA</XPD:REF>
@@ -1778,12 +1778,12 @@ void ConcreteSubject::Notify() {
 </XPD:OBJ>
 <XPD:OBJ name="OwnedViews[7]" type="UMLNoteLinkView" guid="vmo6+8bJGkO8vyQ9yAk/XgAA">
 <XPD:ATTR name="LineColor" type="string">$00CCCCCC</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">196,99;177,97</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">196,97;177,96</XPD:ATTR>
 <XPD:REF name="Head">HXDRn7md00Oje2JplVvPFAAA</XPD:REF>
 <XPD:REF name="Tail">mPF4FZQpz0WtQOfO4eIsgwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedViews[8]" type="UMLDependencyView" guid="8ILIXfBrYE2jTNAgnYdCgwAA">
-<XPD:ATTR name="Points" type="Points">249,188;251,134</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">252,188;252,130</XPD:ATTR>
 <XPD:REF name="Model">AfSf/EV3akCZL0QhJLXcxAAA</XPD:REF>
 <XPD:REF name="Head">mPF4FZQpz0WtQOfO4eIsgwAA</XPD:REF>
 <XPD:REF name="Tail">FPMpNj2TxEyB+59zAEMDLgAA</XPD:REF>
@@ -1818,18 +1818,18 @@ void ConcreteSubject::Notify() {
   Director director;
 
   director.SetBuilder(std::make_unique&lt;ConcreteBuilder&gt;());
-  std::unique_ptr&lt;Product&gt; product = director.Build();
+  Product product = director.Build();
 }
 </XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedViews[10]" type="UMLNoteLinkView" guid="eIDluegaV0CPQqeCZUFNrQAA">
 <XPD:ATTR name="LineColor" type="string">$00CCCCCC</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">239,225;225,256</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">243,225;228,256</XPD:ATTR>
 <XPD:REF name="Head">DMSNmPc7b0SFQfvOQSJufgAA</XPD:REF>
 <XPD:REF name="Tail">FPMpNj2TxEyB+59zAEMDLgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedViews[11]" type="UMLAssociationView" guid="Hhe3LU+VlUGir5ZacpH3/QAA">
-<XPD:ATTR name="Points" type="Points">308,102;368,99</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">308,101;368,101</XPD:ATTR>
 <XPD:REF name="Model">pmFV7wESYUG9hbH7CxwtywAA</XPD:REF>
 <XPD:REF name="Head">O01+0HWQIESwbbrlGATrLQAA</XPD:REF>
 <XPD:REF name="Tail">mPF4FZQpz0WtQOfO4eIsgwAA</XPD:REF>
@@ -2229,12 +2229,13 @@ void ConcreteSubject::Notify() {
 <XPD:ATTR name="#Specializations" type="integer">2</XPD:ATTR>
 <XPD:REF name="Specializations[0]">vb7UQ8H4BkqqSpKX7XI6KQAA</XPD:REF>
 <XPD:REF name="Specializations[1]">E66gGUTTMEi0exG5HMDVjwAA</XPD:REF>
-<XPD:ATTR name="#TypedParameters" type="integer">5</XPD:ATTR>
+<XPD:ATTR name="#TypedParameters" type="integer">6</XPD:ATTR>
 <XPD:REF name="TypedParameters[0]">7tD66e8DlU+dxclGXe3cigAA</XPD:REF>
 <XPD:REF name="TypedParameters[1]">johXGRiR1EC9/6TZtqFQcgAA</XPD:REF>
 <XPD:REF name="TypedParameters[2]">TUmVG72o7kqVgfl3aHBkwAAA</XPD:REF>
 <XPD:REF name="TypedParameters[3]">aSc3L0wJCEOW5AE+oPcutgAA</XPD:REF>
 <XPD:REF name="TypedParameters[4]">arO7v0yKNUuzx9VB+us0QQAA</XPD:REF>
+<XPD:REF name="TypedParameters[5]">ztOk0zfoOkykDFSO60+RsAAA</XPD:REF>
 <XPD:ATTR name="#Associations" type="integer">2</XPD:ATTR>
 <XPD:REF name="Associations[0]">ylSq8SgsF0GRShrZoCX0/AAA</XPD:REF>
 <XPD:REF name="Associations[1]">ZZHPQECMq0Cm8PvhnN60kAAA</XPD:REF>
@@ -2856,7 +2857,7 @@ void ConcreteSubject::Notify() {
 <XPD:ATTR name="#Specializations" type="integer">2</XPD:ATTR>
 <XPD:REF name="Specializations[0]">RhfqBlcMH020b2x5JYvSYQAA</XPD:REF>
 <XPD:REF name="Specializations[1]">S17NdXEtzkWH/YhmA5Vt7gAA</XPD:REF>
-<XPD:ATTR name="#Operations" type="integer">3</XPD:ATTR>
+<XPD:ATTR name="#Operations" type="integer">4</XPD:ATTR>
 <XPD:OBJ name="Operations[0]" type="UMLOperation" guid="19rIPtdUoEGK/cHCHrU3GwAA">
 <XPD:ATTR name="Name" type="string">BuildPartA</XPD:ATTR>
 <XPD:REF name="Owner">uDHK+gYDWUKwBlTkDMZ2oAAA</XPD:REF>
@@ -2868,6 +2869,16 @@ void ConcreteSubject::Notify() {
 <XPD:OBJ name="Operations[2]" type="UMLOperation" guid="h21c+0ptc0OqKFHd3QMKeQAA">
 <XPD:ATTR name="Name" type="string">BuildPartZ</XPD:ATTR>
 <XPD:REF name="Owner">uDHK+gYDWUKwBlTkDMZ2oAAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Operations[3]" type="UMLOperation" guid="khH4GXPJfEexnMKXsOzjwAAA">
+<XPD:ATTR name="Name" type="string">GetProduct</XPD:ATTR>
+<XPD:REF name="Owner">uDHK+gYDWUKwBlTkDMZ2oAAA</XPD:REF>
+<XPD:ATTR name="#Parameters" type="integer">1</XPD:ATTR>
+<XPD:OBJ name="Parameters[0]" type="UMLParameter" guid="ztOk0zfoOkykDFSO60+RsAAA">
+<XPD:ATTR name="DirectionKind" type="UMLParameterDirectionKind">pdkReturn</XPD:ATTR>
+<XPD:REF name="BehavioralFeature">khH4GXPJfEexnMKXsOzjwAAA</XPD:REF>
+<XPD:REF name="Type_">BIjAMBVKXEWNG/ootH8bJwAA</XPD:REF>
+</XPD:OBJ>
 </XPD:OBJ>
 <XPD:ATTR name="#Associations" type="integer">3</XPD:ATTR>
 <XPD:REF name="Associations[0]">72/ZKnEi7E256EKic6l79wAA</XPD:REF>
@@ -3098,8 +3109,8 @@ void ConcreteSubject::Notify() {
 <XPD:REF name="Participant">/D8VGS2NxUGvTHRl2dHzugAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">NFAIPDCvEkWxrHCpm553swAA</XPD:REF>
-<XPD:REF name="Views[1]">8VWltz+6C02rNOBSXmJ3fAAA</XPD:REF>
-<XPD:REF name="Views[2]">XOHEUEwi+0WyAY6PbHBlSAAA</XPD:REF>
+<XPD:REF name="Views[1]">XOHEUEwi+0WyAY6PbHBlSAAA</XPD:REF>
+<XPD:REF name="Views[2]">8VWltz+6C02rNOBSXmJ3fAAA</XPD:REF>
 <XPD:REF name="Views[3]">hPlT1213NUe9C7S6hheVJgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Connections[1]" type="UMLAssociationEnd" guid="ZZHPQECMq0Cm8PvhnN60kAAA">
@@ -3107,8 +3118,8 @@ void ConcreteSubject::Notify() {
 <XPD:REF name="Participant">BIjAMBVKXEWNG/ootH8bJwAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">eVaDTtEMJEaCQ5CkH5BHNQAA</XPD:REF>
-<XPD:REF name="Views[1]">MGR19loGuUm7o95och4PtQAA</XPD:REF>
-<XPD:REF name="Views[2]">o+qfLGsx5EygpyTcuUVTdwAA</XPD:REF>
+<XPD:REF name="Views[1]">o+qfLGsx5EygpyTcuUVTdwAA</XPD:REF>
+<XPD:REF name="Views[2]">MGR19loGuUm7o95och4PtQAA</XPD:REF>
 <XPD:REF name="Views[3]">yGi5Q5fPvk2JGtnaK4mAUwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
