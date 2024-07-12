@@ -10,93 +10,74 @@
 #include <iostream>
 #include <memory>
 
-// Product1
-class Manager {
- protected:
-  Manager() = default;
-
+// Abstract Product 1
+class CheckBox {
  public:
-  virtual ~Manager() = default;
-  virtual void function() = 0;
+  virtual void Check(bool enable) = 0;
 };
 
-// Concrete Product1
-class SoccerManager : public Manager {
+// Abstract Product 2
+class Button {
  public:
-  void function() override { std::cout << "soccer manager" << std::endl; }
+  virtual void Click(bool enable) = 0;
 };
 
-class TennisManager : public Manager {
+// Concrete Product 1
+class WindowsCheckBox : public CheckBox {
  public:
-  void function() override { std::cout << "tennis manager" << std::endl; }
+  void Check(bool enable) override {}
 };
 
-// Product2
-class Player {
- protected:
-  Player() = default;
-
+class MacCheckBox : public CheckBox {
  public:
-  virtual ~Player() = default;
-  virtual void function() = 0;
+  void Check(bool enable) override {}
 };
 
-// Concrete Product2
-class SoccerPlayer : public Player {
+// Concrete Product 2
+class WindowsButton : public Button {
  public:
-  void function() override { std::cout << "soccer player" << std::endl; }
+  void Click(bool enable) override {}
 };
 
-class TennisPlayer : public Player {
+class MacButton : public Button {
  public:
-  void function() override { std::cout << "tennis player" << std::endl; }
+  void Click(bool enable) override {}
 };
 
-// Creator
-class AbstractFactory {
+// Abstract Factory
+class GUIFactory {
  public:
-  virtual std::unique_ptr<Manager> createManager() const = 0;
-  virtual std::unique_ptr<Player> createPlayer() const = 0;
+  virtual std::unique_ptr<CheckBox> CreateCheckBox() = 0;
+  virtual std::unique_ptr<Button> CreateButton() = 0;
 };
 
-// Concrete Creator
-class SoccerFactory : public AbstractFactory {
+// Concrete Factory
+class WindowsGUIFactory : public GUIFactory {
  public:
-  std::unique_ptr<Manager> createManager() const override {
-    return std::make_unique<SoccerManager>();
+  std::unique_ptr<CheckBox> CreateCheckBox() override {
+    return std::make_unique<WindowsCheckBox>();
   }
-
-  std::unique_ptr<Player> createPlayer() const override {
-    return std::make_unique<SoccerPlayer>();
+  std::unique_ptr<Button> CreateButton() override {
+    return std::make_unique<WindowsButton>();
   }
 };
 
-class TennisFactory : public AbstractFactory {
+class MacGUIFactory : public GUIFactory {
  public:
-  std::unique_ptr<Manager> createManager() const override {
-    return std::make_unique<TennisManager>();
+  std::unique_ptr<CheckBox> CreateCheckBox() override {
+    return std::make_unique<MacCheckBox>();
   }
-
-  std::unique_ptr<Player> createPlayer() const override {
-    return std::make_unique<TennisPlayer>();
+  std::unique_ptr<Button> CreateButton() override {
+    return std::make_unique<MacButton>();
   }
 };
-
-/*
-void doSomething(const AbstractFactory& factory) {
-  std::unique_ptr<Manager> manager = factory.createManager();
-  std::unique_ptr<Player> player = factory.createPlayer();
-
-  manager->function();
-  player->function();
-}
 
 int main() {
-  std::unique_ptr<AbstractFactory> soccer = std::make_unique<SoccerFactory>();
-  std::unique_ptr<AbstractFactory> tennis = std::make_unique<TennisFactory>();
+  std::unique_ptr<GUIFactory> factory = std::make_unique<WindowsGUIFactory>();
+  auto button = factory->CreateButton();
+  auto checkbox = factory->CreateCheckBox();
 
-  doSomething(*soccer);
-  doSomething(*tennis);
-  return 0;
+  factory = std::make_unique<MacGUIFactory>();
+  button = factory->CreateButton();
+  checkbox = factory->CreateCheckBox();
 }
-*/
