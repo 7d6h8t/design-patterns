@@ -11,73 +11,95 @@
 #include <string>
 
 // Product : Director 가 Builder로 만들어낸 결과물.
-class Character {
+class House {
  public:
-  void SetWeapon(const int32_t weapon) { weapon_ = weapon; }
-  void SetArmor(const int32_t armor) { armor_ = armor; }
-  void SetName(const std::string& name) { name_ = name; }
-
-  void ShowInformation() {
-    std::cout << "Name :" << name_ << std::endl;
-    std::cout << "Weapon power:" << weapon_ << std::endl;
-    std::cout << "Armor defence:" << armor_ << std::endl;
-  }
+  friend class HouseBuilder;
+  House(const uint32_t door, const uint32_t window, const uint32_t pool,
+        const uint32_t garage, const uint32_t garden)
+      : door_(door),
+        window_(window),
+        pool_(pool),
+        garage_(garage),
+        garden_(garden) {}
 
  private:
-  int32_t weapon_;
-  int32_t armor_;
-  std::string name_;
+  uint32_t door_;
+  uint32_t window_;
+  uint32_t pool_;
+  uint32_t garage_;
+  uint32_t garden_;
 };
 
 // Builder
-class CharacterBuilder {
+class Builder {
  public:
-  virtual void BuildWeapon(const int32_t weapon) = 0;
-  virtual void BuildArmor(const int32_t armor) = 0;
-  virtual void BuildName(const std::string& name) = 0;
-  virtual Character GetResult() = 0;
+  virtual Builder& BuildDoor(const uint32_t door) = 0;
+  virtual Builder& BuildWindow(const uint32_t window) = 0;
+  virtual Builder& BuildPool(const uint32_t pool) = 0;
+  virtual Builder& BuildGarage(const uint32_t garage) = 0;
+  virtual Builder& BuildGarden(const uint32_t garden) = 0;
+  virtual House Create() = 0;
 };
 
-// Concrete Builder for archer
-class TeranBuilder : public CharacterBuilder {
+// Concrete Builder for House
+class HouseBuilder : public Builder {
  public:
-  void BuildWeapon(const int32_t weapon) override {
-    character_.SetWeapon(weapon);
+  Builder& BuildDoor(const uint32_t door) override {
+    door_ = door;
+    return *this;
   }
-  void BuildArmor(const int32_t armor) override { character_.SetArmor(armor); }
-  void BuildName(const std::string& name) override { character_.SetName(name); }
-
-  Character GetResult() override { return character_; }
+  Builder& BuildWindow(const uint32_t window) override {
+    window_ = window;
+    return *this;
+  }
+  Builder& BuildPool(const uint32_t pool) override {
+    pool_ = pool;
+    return *this;
+  }
+  Builder& BuildGarage(const uint32_t garage) override {
+    garage_ = garage;
+    return *this;
+  }
+  Builder& BuildGarden(const uint32_t garden) override {
+    garden_ = garden;
+    return *this;
+  }
+  House Create() override {
+    return House(door_, window_, pool_, garage_, garden_);
+  }
 
  private:
-  Character character_;
+  uint32_t door_;
+  uint32_t window_;
+  uint32_t pool_;
+  uint32_t garage_;
+  uint32_t garden_;
 };
 
 // Director
-class CharacterDirector {
+class Director {
  public:
-  Character CreateMarine(std::unique_ptr<CharacterBuilder>&& builder) {
-    builder->BuildWeapon(10);
-    builder->BuildArmor(5);
-    builder->BuildName("Marine");
-    return builder->GetResult();
+  House CreateNormalHouse(std::unique_ptr<Builder>&& builder) {
+    return builder->BuildDoor(1).BuildWindow(2).Create();
   }
 
-  Character CreateMedic(std::unique_ptr<CharacterBuilder>&& builder) {
-    builder->BuildWeapon(0);
-    builder->BuildArmor(6);
-    builder->BuildName("Medic");
-    return builder->GetResult();
+  House CreatePoolHouse(std::unique_ptr<Builder>&& builder) {
+    return builder->BuildDoor(3)
+        .BuildWindow(3)
+        .BuildGarden(1)
+        .BuildGarage(1)
+        .BuildPool(1)
+        .Create();
   }
 };
 
 int main() {
-  CharacterDirector barak;
+  Director house_maker;
 
-  Character marine = barak.CreateMarine(std::make_unique<TeranBuilder>());
-  Character medic = barak.CreateMedic(std::make_unique<TeranBuilder>());
+  House normal_house =
+      house_maker.CreateNormalHouse(std::make_unique<HouseBuilder>());
+  House pool_house =
+      house_maker.CreatePoolHouse(std::make_unique<HouseBuilder>());
 
-  marine.ShowInformation();
-  medic.ShowInformation();
   return 0;
 }
