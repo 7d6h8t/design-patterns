@@ -4,61 +4,59 @@
  * 2. 확장성과 factory 클래스의 변동 억제(OCP 원칙)를 위해 서브클래스로 분리.
  * 호출 코드에서 생성 루틴에 대한 의존성 제거 + 확장성이 필요한 경우 사용됨.
  */
-
 #include <iostream>
 #include <memory>
+#include <string>
 
 // Product
-class User {
- protected:
-  User() = default;
-
- public:
-  virtual ~User() = default;
-  virtual void signUp() = 0;
+class Button {
+  // do somthing
 };
 
 // Concrete Product
-class NaverUser : public User {
- public:
-  void signUp() override { std::cout << "sign up with naver id" << std::endl; }
+class WindowsButton : public Button {
+  // do somthing
 };
 
-class KakaoUser : public User {
- public:
-  void signUp() override { std::cout << "sign up with kakao id" << std::endl; }
+class MacButton : public Button {
+  // do somthing
 };
 
 // Creator
-class Factory {
+class Dialog {
  public:
-  std::unique_ptr<User> newInstance() {
-    std::unique_ptr<User> user = std::move(create());
-    user->signUp();
-    return std::move(user);
+  void Open() {
+    std::unique_ptr<Button> default_button = CreateButton();
+    // do somthing
+    // default_button->SetColor();
+    // default_button->SetPosition();
+    // etc..
   }
 
  protected:
-  virtual std::unique_ptr<User> create() = 0;
+  // Factory Method
+  virtual std::unique_ptr<Button> CreateButton() = 0;
 };
 
 // Concrete Creator
-class NaverFactory : public Factory {
-  std::unique_ptr<User> create() { return std::make_unique<NaverUser>(); }
+class WindowsDialog : public Dialog {
+ private:
+  std::unique_ptr<Button> CreateButton() override {
+    return std::make_unique<WindowsButton>();
+  }
 };
 
-class KakaoFactory : public Factory {
-  std::unique_ptr<User> create() { return std::make_unique<KakaoUser>(); }
+class MacDialog : public Dialog {
+ private:
+  std::unique_ptr<Button> CreateButton() override {
+    return std::make_unique<MacButton>();
+  }
 };
 
-/*
 int main() {
-  std::unique_ptr<Factory> naverFactory = std::make_unique<NaverFactory>();
-  std::unique_ptr<User> naverUser = std::move(naverFactory->newInstance());
+  std::unique_ptr<Dialog> dlg = std::make_unique<MacDialog>();
+  dlg->Open();
 
-  std::unique_ptr<Factory> kakoFactory = std::make_unique<KakaoFactory>();
-  std::unique_ptr<User> kakaoUser = std::move(kakoFactory->newInstance());
-
-  return 0;
+  dlg = std::make_unique<WindowsDialog>();
+  dlg->Open();
 }
-*/
