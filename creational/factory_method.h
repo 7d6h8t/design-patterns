@@ -9,54 +9,59 @@
 #include <string>
 
 // Product
-class Button {
+class Log {
+ public:
+  virtual void Write(const std::string& log) = 0;
   // do somthing
 };
 
 // Concrete Product
-class WindowsButton : public Button {
+class ConsoleLog : public Log {
+ public:
+  void Write(const std::string& log) override {}
   // do somthing
 };
 
-class MacButton : public Button {
+class FileLog : public Log {
+ public:
+  void Write(const std::string& log) override {}
   // do somthing
 };
 
 // Creator
-class Dialog {
+class Logger {
  public:
-  void Open() {
-    std::unique_ptr<Button> default_button = CreateButton();
+  void Write(const std::string& log) {
+    std::unique_ptr<Log> logger = CreateLog();
+    logger->Write(log);
     // do somthing
-    // default_button->SetColor();
-    // default_button->SetPosition();
     // etc..
   }
 
  protected:
   // Factory Method
-  virtual std::unique_ptr<Button> CreateButton() = 0;
+  virtual std::unique_ptr<Log> CreateLog() = 0;
 };
 
 // Concrete Creator
-class WindowsDialog : public Dialog {
+class ConsoleLogFactory : public Logger {
  private:
-  std::unique_ptr<Button> CreateButton() override {
-    return std::make_unique<WindowsButton>();
+  std::unique_ptr<Log> CreateLog() override {
+    return std::make_unique<ConsoleLog>();
   }
 };
 
-class MacDialog : public Dialog {
+class FileLogFactory : public Logger {
  private:
-  std::unique_ptr<Button> CreateButton() override {
-    return std::make_unique<MacButton>();
+  std::unique_ptr<Log> CreateLog() override {
+    return std::make_unique<FileLog>();
   }
 };
 
 int main() {
-  std::unique_ptr<Dialog> dlg = std::make_unique<MacDialog>();
-  dlg->Open();
+  std::unique_ptr<Logger> logger = std::make_unique<ConsoleLogFactory>();
+  logger->Write("");
 
-  dlg = std::make_unique<WindowsDialog>();
-  dlg->Open();
+  logger = std::make_unique<FileLogFactory>();
+  logger->Write("");
 }
