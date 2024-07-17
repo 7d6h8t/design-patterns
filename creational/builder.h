@@ -13,7 +13,6 @@
 // Product : Director 가 Builder로 만들어낸 결과물.
 class House {
  public:
-  friend class HouseBuilder;
   House(const uint32_t door, const uint32_t window, const uint32_t pool,
         const uint32_t garage, const uint32_t garden)
       : door_(door),
