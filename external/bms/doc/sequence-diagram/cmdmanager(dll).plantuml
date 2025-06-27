@@ -1,0 +1,24 @@
+@startuml cmdmanager
+
+title cmdmanager
+
+actor user
+participant cmdmanager
+participant "serial_port(dll)"
+participant hardware_board
+
+user -> cmdmanager : serial_connect()
+cmdmanager -> "serial_port(dll)" : connect()
+"serial_port(dll)" -> hardware_board : serial communication connect
+
+user -> cmdmanager : send cmd api
+cmdmanager -> "serial_port(dll)" : write(cmd)
+"serial_port(dll)" -> hardware_board : write string to serial communication buffer
+cmdmanager -> "serial_port(dll)" : read_until_flag()
+"serial_port(dll)" -> hardware_board : read string from serial communication buffer until specified flag
+"serial_port(dll)" <- hardware_board : read string
+"serial_port(dll)" -> "serial_port(dll)" : string convert to data
+cmdmanager <- "serial_port(dll)" : data
+user <- cmdmanager : receive data
+
+@enduml

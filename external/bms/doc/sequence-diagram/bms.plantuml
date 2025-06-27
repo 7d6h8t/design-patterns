@@ -1,0 +1,39 @@
+@startuml bms
+
+title bms
+
+actor user
+participant "mainFrame"
+participant "cmdmanager(dll)"
+
+user -> "mainFrame" : click connection button
+"mainFrame" -> "cmdmanager(dll)" : serial_connect()
+
+alt click MEAS_SINGLE? button
+
+user -> "mainFrame" : click MEAS_SINGLE? button after set drawing type and mode
+
+activate "mainFrame"
+"mainFrame" --> "cmdmanager(dll)" : sendMEAS_ALL()
+"mainFrame" <-- "cmdmanager(dll)" : receive data
+
+"mainFrame" --> "mainFrame" : postmessage draw receive data
+"mainFrame" -> "mainFrame" : draw operation in message handler
+deactivate "mainFrame"
+
+else click MEAS_REPEAT? button
+loop interval selected times (ms)
+user -> "mainFrame" : click MEAS_REPEAT? button after set drawing type and mode
+
+activate "mainFrame"
+"mainFrame" --> "cmdmanager(dll)" : sendMEAS_ALL()
+"mainFrame" <-- "cmdmanager(dll)" : receive data
+
+"mainFrame" --> "mainFrame" : postmessage draw receive data
+"mainFrame" -> "mainFrame" : draw operation in message handler
+deactivate "mainFrame"
+end
+
+end
+
+@enduml

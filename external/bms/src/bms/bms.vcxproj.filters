@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{a893acb5-7cb6-4fa8-b520-c37c83bca345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\controls">
+      <UniqueIdentifier>{098adc50-b617-48de-a803-6131aecba5a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="info">
+      <UniqueIdentifier>{90623a61-4f7a-44c9-91e6-31c8f3f5be66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\dialog">
+      <UniqueIdentifier>{e6b94992-c7b8-47f2-b69f-dad0da07ffa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="versioninfo">
+      <UniqueIdentifier>{a347d5bf-90c0-4684-af58-362219cf27b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dumpManager">
+      <UniqueIdentifier>{2e00ad9c-a674-4022-a03e-80cdb008d761}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="ui\bmsApp.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\bmsDoc.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\bmsView.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\mainFrame.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\dashboard_container.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\dashboard_adapter.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\controls\cbsetGridItem.h">
+      <Filter>ui\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\controls\colorIndicaterGridItem.h">
+      <Filter>ui\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\configurationDockbar.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="info\configuration_info.h">
+      <Filter>info</Filter>
+    </ClInclude>
+    <ClInclude Include="info\meas_info.h">
+      <Filter>info</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\vc_chart_adapter.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\vc_chart_container.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\controls\legendCheckGridCtrl.h">
+      <Filter>ui\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\controls\legendGridItem.h">
+      <Filter>ui\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\temp_chart_adapter.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\temp_chart_container.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="info\view_mode.h">
+      <Filter>info</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\dialog\setting_dlg.h">
+      <Filter>ui\dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\controls\autoSizeGridCtrl.h">
+      <Filter>ui\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="versioninfo\version.h">
+      <Filter>versioninfo</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\dialog\aboutDlg.h">
+      <Filter>ui\dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="versioninfo\versionUtils.h">
+      <Filter>versioninfo</Filter>
+    </ClInclude>
+    <ClInclude Include="dumpManager\dumpManager.h">
+      <Filter>dumpManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\dashboard_view_stack_adapter.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\dashboard_view_all_adapter.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\dashboard_stack_container.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\dashboard_stack_container_ctrl.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="info\grid_info.h">
+      <Filter>info</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\controls\barLabelPosChangeImpl.h">
+      <Filter>ui\controls</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ui\bmsApp.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\bmsDoc.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\bmsView.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\mainFrame.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\dashboard_container.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\dashboard_adapter.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\controls\cbsetGridItem.cpp">
+      <Filter>ui\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\controls\colorIndicaterGridItem.cpp">
+      <Filter>ui\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\configurationDockbar.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="info\configuration_info.cpp">
+      <Filter>info</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\vc_chart_adapter.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\vc_chart_container.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\controls\legendCheckGridCtrl.cpp">
+      <Filter>ui\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\controls\legendGridItem.cpp">
+      <Filter>ui\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\temp_chart_adapter.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\temp_chart_container.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\dialog\setting_dlg.cpp">
+      <Filter>ui\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\controls\autoSizeGridCtrl.cpp">
+      <Filter>ui\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\dialog\aboutDlg.cpp">
+      <Filter>ui\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="versioninfo\versionUtils.cpp">
+      <Filter>versioninfo</Filter>
+    </ClCompile>
+    <ClCompile Include="dumpManager\dumpManager.cpp">
+      <Filter>dumpManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\dashboard_view_stack_adapter.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\dashboard_view_all_adapter.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\dashboard_stack_container.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\dashboard_stack_container_ctrl.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\controls\barLabelPosChangeImpl.cpp">
+      <Filter>ui\controls</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="bms.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\bms.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include=".editorconfig" />
+    <None Include="res\DashBoard.visual-bcgsoft" />
+    <None Include="res\VC_Chart.visual-bcgsoft" />
+    <None Include="res\TEMP_Chart.visual-bcgsoft" />
+    <None Include="versioninfo\version.inc">
+      <Filter>versioninfo</Filter>
+    </None>
+    <None Include="res\DashBoardStack1.visual-bcgsoft" />
+    <None Include="res\DashBoardStack2.visual-bcgsoft" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bmsDoc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bms.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\shortcuts32.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

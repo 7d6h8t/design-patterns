@@ -1,0 +1,12 @@
+[submodule "external/bcgcontrolbar"]
+	path = external/bcgcontrolbar
+	url = http://gitlab.nextchip.com/nextune/bcgcontrolbar.git
+[submodule "external/utils"]
+	path = external/utils
+	url = http://gitlab.nextchip.com/nextune/utils.git
+[submodule "external/jsonLib"]
+	path = external/jsonLib
+	url = http://gitlab.nextchip.com/nextune/jsonLib.git
+[submodule "external/serialcommunication"]
+	path = external/serialcommunication
+	url = http://gitlab.nextchip.com/nextune/serialcommunication.git

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="include\export.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cmdmanager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="cmdmanagerImpl.h" />
+    <ClInclude Include="testImpl.h" />
+    <ClInclude Include="include\BMS_info.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MEAS_info.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CB_info.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\device_manager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="serialImpl.h" />
+    <ClInclude Include="convert.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="cmdmanager.cpp" />
+    <ClCompile Include="testImpl.cpp" />
+    <ClCompile Include="cmdmanagerImpl.cpp" />
+    <ClCompile Include="device_manager.cpp" />
+    <ClCompile Include="serialImpl.cpp" />
+    <ClCompile Include="convert.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{2b9d78c2-e573-424e-9536-0100168372ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+  </ItemGroup>
+</Project>

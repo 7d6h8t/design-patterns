@@ -1,0 +1,132 @@
+def boolean isVersionTag(String tag) {
+    if (tag == null) {
+        return false
+    }
+
+    tag.toLowerCase();
+
+    def tagMatcher = tag =~ /release-v\d+\.\d+\.\d+(?:(_hotfix))?$/
+    return tagMatcher.matches()
+}
+
+def String readCurrentTag() {
+    powershell(returnStdout: true, script: "git fetch --prune origin +refs/tags/*:refs/tags/*")
+    return powershell(returnStdout: true, script: "git describe --tag --abbrev=0").trim()
+}
+
+def String getVersionTag(String tag) { 
+    if (tag == null) {
+        return null
+    }
+    
+    tag.toLowerCase();
+
+    if(isVersionTag(tag) == false) {
+        return null
+    }
+
+    def (_,main,major,minor) = (tag =~ /^release-v(\d{1,3})\.(\d{1,3})\.(\d{1,3})(?:(_hotfix))?$/)[0]
+    def strVersion="$main.$major.$minor.$BUILD_NUMBER"
+    echo "version $strVersion"
+    return strVersion;
+}
+
+pipeline{
+    agent{
+        node{
+            label ""
+            customWorkspace "C:/Projects/bms"
+        }
+    }
+    environment{
+        BUILD_VERSION = getVersionTag(readCurrentTag())
+        RELEASE_SERVER_PATH = "\\\\192.168.1.217\\Release\\BMS"       
+    }
+    stages{
+        stage('release'){
+            when {
+                expression {
+                    env.BUILD_VERSION != 'null'
+                }
+            }           
+            stages{
+                stage('update version'){
+                    environment{
+                        VERSION_BAT = "install\\tool\\UpdateVersion.bat"
+                        VERSION_INC = "src\\bms\\versioninfo\\Version.inc"
+                    }
+                    steps{
+                        bat "${env.VERSION_BAT} ${env.VERSION_INC} ${env.BUILD_VERSION}" 
+                    }
+                }
+                stage('build external'){
+                    environment{
+                        SOL_PATH = "build\\external.sln"
+                        BUILD_OPTION = "/m /t:Rebuild /p:Configuration=Release;Platform=x64"
+                    }
+                    steps{
+                        bat "\"${env.MSBuild17Path}\" ${env.SOL_PATH} ${env.BUILD_OPTION}"
+                    }
+                }
+                stage('build tool'){
+                    environment{
+                        SOL_PATH = "build\\bms.sln"
+                        BUILD_OPTION = "/m /t:Rebuild /p:Configuration=Release;Platform=x64"
+                    }
+                    steps{
+                        bat "\"${env.MSBuild17Path}\" ${env.SOL_PATH} ${env.BUILD_OPTION}"
+                    }
+                }
+                stage('package'){
+                    environment{
+                        SETUP_SCRIPT = "install\\BMS_setup.iss"
+                    }
+                    steps{
+                        bat "\"${env.InnoSetupPath6}\" ${env.SETUP_SCRIPT}"
+                    }
+                }
+                stage('deploy'){
+                    environment{
+                        OUTPUT_PATH = "bin\\x64\\Release"                        
+                        //symbol
+                        SYMBOL_SERVER = "${env.RELEASE_SERVER_PATH}\\Symbols"
+                        SYMBOL_ADD = "add /r /f ${env.OUTPUT_PATH}\\*.* /s ${env.SYMBOL_SERVER} /t BMS /v ${env.BUILD_VERSION}"
+                        //installer
+                        INSTALLOUTPUT = "bin\\install\\*.exe"
+                        INSTALL_SERVER = "${env.RELEASE_SERVER_PATH}\\v${env.BUILD_VERSION}" 
+                    }
+                    steps{
+                        //login to release server
+                        bat "net use ${env.RELEASE_SERVER_PATH} Welcome1! /USER:nextchip\\CAE_TEAMS"
+                        //add to symbol
+                        bat "\"${env.symbolstore}\" ${env.SYMBOL_ADD}"
+                        //copy setup file
+                        bat "xcopy \"${env.INSTALLOUTPUT}\" \"${env.INSTALL_SERVER}\" /C /S /I /F /H /Y"
+                        script {
+                            //set param
+                            env.RELEASE_TAGNAME = readCurrentTag()
+                            env.RELEASE_VERSION = "${env.BUILD_VERSION}"
+                            env.RELEASE_OUTPUT = "${env.INSTALL_SERVER}"
+                        }
+                    }
+                }
+            }
+
+            post{
+                always{
+                    //delete build output
+                    dir('bin') {
+                        deleteDir()
+                    }                    
+                    //send to email
+                    emailext attachLog: true, 
+                    body: '''${SCRIPT,template="html_git_default.template"}''',
+                        mimeType: 'text/html',
+                        subject: '$DEFAULT_SUBJECT',
+                        to: 'shjung@nextchip.com, aslkdj1@nextchip.com',
+                        replyTo: '$DEFAULT_REPLYTO'
+                }
+            }        
+        }
+    }
+}
