@@ -1,0 +1,47 @@
+@startuml serial communication
+
+title serial communication
+
+actor user
+participant serial_port
+participant hardware_board
+
+user -> serial_port : connect()
+note right : serial communication connect
+
+alt if synchronous write
+user -> serial_port : write()
+serial_port -> hardware_board : write string to serial communication buffer
+
+else if synchronous read
+user -> serial_port : read()
+serial_port -> hardware_board : read string from serial communication buffer
+serial_port <- hardware_board
+user <- serial_port : read data
+
+else if synchronous read until flag
+user -> serial_port : read_until_flag()
+serial_port -> hardware_board : read string from serial communication buffer until specified flag
+serial_port <- hardware_board
+user <- serial_port : read data
+
+else if asynchronous write
+user -> serial_port : async_write()
+serial_port --> hardware_board : write string to serial communication buffer
+
+else if asynchronous read
+user -> serial_port : async_read()
+serial_port --> hardware_board : read string from serial communication buffer
+serial_port <-- hardware_board
+user <-- serial_port : read data
+
+else if asynchronous read until flag
+user -> serial_port : async_read_until_flag()
+serial_port --> hardware_board : read string from serial communication buffer until specified flag
+serial_port <-- hardware_board
+user <-- serial_port : read data
+
+end
+
+
+@enduml
